@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>上传图片检测</title>
+        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+            <div class="container">
+                <a href="/index" class="navbar-brand">秒速识菌</a>
+
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navmenu"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto">
+                        <!--margin start = margin left-->
+                        <li class="nav-item">
+                            <div class="nav-link">蘑菇识别</div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-link">蘑菇图鉴</div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-link">关于我们</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+<!--主要功能 -->
+<section class="p-5 bg-light text-dark text-center text-sm-start">
+    <div class="container">
+        <div class="d-flex">
+            <!--display flex-->
+            <div>
+                <div style="display: flex;">
+                    <!--选择文件-->
+                    <div style="margin-right: 50px;margin-top:50px;">
+                        <label for="file0" class="btn btn-primary btn-lg">
+                            选择文件
+                        </label>
+                        <input type="file" name="file" id="file0" style="display: none;">
+                    </div>
+                    <div>
+                        <input type="button" id="b0" onclick="test()" value="预测" class="btn btn-primary btn-lg" style="margin-top:50px">
+                    </div>
+                </div>
+
+                <img src="" id="img0" style="margin-top: 30px; width: 45rem; height: 30rem;">
+            </div>
+
+            <div style="float: left; margin-left: 50px;">
+                <pre id="out" style="width: 600px; height: 500px; line-height: 500px; margin-top: 100px;"></pre>
+            </div>
+
+            <div style="text-align: left; margin-left: 100px; margin-top: 60px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--主要功能 -->
+<section class="p-5">
+    <div class="container">
+        <h2 class="text-center">常见问题</h2>
+        <div
+                class="accordion accordion-flush"
+                id="accordionFlushExample"
+        >
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseOne"
+                    >
+                        上传文件失败
+                    </button>
+                </h2>
+                <div
+                        id="flush-collapseOne"
+                        class="accordion-collapse collapse show"
+                        aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample"
+                >
+                    <div class="accordion-body">
+                        请检查您上传的文件格式：
+                        <code>PNG/JPG/JPEG/SVG/GIF</code> 或者重新上传
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseTwo"
+                    >
+                        未返回识别结果
+                    </button>
+                </h2>
+                <div
+                        id="flush-collapseTwo"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingTwo"
+                        data-bs-parent="#accordionFlushExample"
+                >
+                    <div class="accordion-body">
+                        检查您的网络配置是否出错，清理浏览器缓存后再试一次，或者联系我们
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseThree"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseThree"
+                    >
+                        无法加载图片
+                    </button>
+                </h2>
+                <div
+                        id="flush-collapseThree"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingThree"
+                        data-bs-parent="#accordionFlushExample"
+                >
+                    <div class="accordion-body">
+                        请检查您的浏览器是否能够完全加载本网页，若无法正常加载请使用最新版本Chrome浏览器重新尝试
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section class="p-5">
+    <div class="container">
+        <h2 class="text-center mb-4">联系我们</h2>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">电话：19105011596</li>
+            <li class="list-group-item">邮箱： 3227026693@qq.com</li>
+            <li class="list-group-item">地址：福建农林大学计算机与信息学院</li>
+        </ul>
+    </div>
+</section>
+
+<footer class="p-5 bg-dark text-white text-center">
+    <div class="container">
+        <p class="lead">Copyright &copy; 2023 陆宣兆</p>
+    </div>
+</footer>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+        ></script>
+
+    <script type="text/javascript">
+    $("#file0").change(function(){
+        var objUrl = getObjectURL(this.files[0]) ;//获取文件信息
+        console.log("objUrl = "+objUrl);
+        if (objUrl) {
+            $("#img0").attr("src", objUrl);
+        }
+    });
+
+    function test() {
+        var fileobj = $("#file0")[0].files[0];
+        console.log(fileobj);
+        var form = new FormData();
+        form.append("file", fileobj);
+        var out='';
+        var flower='';
+        $.ajax({
+            type: 'POST',
+            url: "predict",
+            data: form,
+            async: false,       //同步执行
+            processData: false, // 告诉jquery要传输data对象
+            contentType: false, //告诉jquery不需要增加请求头对于contentType的设置
+            success: function (arg) {
+            console.log(arg)
+            out = arg.result;
+        },error:function(){
+                console.log("后台处理错误");
+            }
+    });
+
+        out.forEach(e=>{
+            flower+=`<div style="border-bottom: 1px solid #CCCCCC;line-height: 60px;font-size:16px;">${e}</div>`
+        });
+
+        document.getElementById("out").innerHTML=flower;
+
+    }
+    function getObjectURL(file) {
+        var url = null;
+        if(window.createObjectURL!=undefined) {
+            url = window.createObjectURL(file) ;
+        }else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        }else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+</script>
+    </body>
+</html>
